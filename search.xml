@@ -3,6 +3,48 @@
   
     
     <entry>
+      <title>Vivado HLS Interface (一)</title>
+      <link href="/2018/03/15/Vivado-HLS-Interface/"/>
+      <content type="html"><![CDATA[<h2 id="Vivado-HLS-Inteface-一-—概述"><a href="#Vivado-HLS-Inteface-一-—概述" class="headerlink" title="Vivado HLS Inteface(一)—概述"></a>Vivado HLS Inteface(一)—概述</h2><p>接口是FPGA内实现的Process element(PE)与外部沟通的通道，在整个软硬件协同工作中具有至关重要的作用。接口的延迟和带宽影响着FPGA加速系统的整体性能。<br><!--因此，PE的架构设计以及数据流的处理方式--></p><blockquote><p>“区别于C语言等软件语言的输入输出的零延迟操作，在 RTL（硬件）设计中，输入输出操作必须通过具体的<font color="red" size="2">IO(input-output)协议实现</font>。 Vivado HLS根据开发人员的设计输入以及约束条件(#pragma) 完成HLS设计的接口综合。</p></blockquote><h3 id="Vivado-HLS-接口类型"><a href="#Vivado-HLS-接口类型" class="headerlink" title="Vivado HLS 接口类型"></a>Vivado HLS 接口类型</h3><p>   HLS的接口类型主要包含三个方面：Clock and Reset 类型 、Block Level 类型 和 Port Level 类型<br>   <img src="/images/HLS_Interface_Types.jpg" alt="HLS interface"></p><ul><li><p>Clock and Reset 类型  </p><blockquote><p>主要包含 时钟和复位信号的输入，用来服务于所生成IP核内部的逻辑，驱动和复位IP内的核心状态机等</p></blockquote></li><li><p>Block Level 类型 【控制类型的接口，出现在IP核的顶层】</p><blockquote><p>主要指ap_ctrl接口，包含一系列信号：ap_start, ap_done, ap_ready, ap_idle。 此类型的接口应用于IP设计的顶层，同clock信号和 reset信号一起。</p><ul><li><font color="blue" size="3">ap_start： 启动IP数据处理  </font></li><li><font color="blue" size="3">ap_done ： IP数据处理 </font></li><li>ap_ready： 已经完成数据处理，可以接受新的数据</li><li>ap_idle ： IP 处于IDLE状态（空闲状态）</li></ul></blockquote></li><li><p>Port Level 类型 【数据类型的接口，用于赋予IP核数据，IP核内部】</p><blockquote><p><strong>主要用于处理IP核函数的Argument，用于向IP核输入数据或者获取IP核输出的数据</strong>。Vivado HLS 主要包含 BRAM 接口，AXI Memory-Mapped Slave接口， AXI Memory-mapped Master接口，AXI Stream接口等<br>  <img src="/images/HLS interface.jpg" alt=""></p><blockquote><font color="red" size="3"><br>  - <a href="/_posts/HLS-One.md">BRAM 接口 和 Memory 接口</a><br>  - <a href="">AXI Stream 接口</a><br>  - <a href="">AXI Memory Map接口</a><br>  - <a href="">Default ap 接口</a><br> </font></blockquote></blockquote></li></ul>]]></content>
+      
+      
+        <tags>
+            
+            <tag> Vivado HLS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>Xilinx Tool Tips</title>
+      <link href="/2018/03/14/Xilinx-Tool-Tips/"/>
+      <content type="html"><![CDATA[<h1 id="Xilinx-工具的一些问题集锦"><a href="#Xilinx-工具的一些问题集锦" class="headerlink" title="Xilinx 工具的一些问题集锦"></a>Xilinx 工具的一些问题集锦</h1><blockquote><p>来自google，xilinx forum以及其他论坛</p></blockquote><h3 id="1-vivado-2017-2及2017-3-Window10-启动问题"><a href="#1-vivado-2017-2及2017-3-Window10-启动问题" class="headerlink" title="1. vivado 2017.2及2017.3 Window10 启动问题"></a>1. vivado 2017.2及2017.3 Window10 启动问题</h3><blockquote><p>Microsoft Visual C++Runtime Library<br>Program: C:\Xilinx\Vivado\2017.2\unwrapped\win64.o\vivado.exe<br>R6025 - pure virtual function call</p></blockquote><p>出现以上问题，主要是因为win10更新的问题。解决方法xilinx已经给出:</p><ul><li>Navigate to (Vivado Installed Directory)\2017.3\bin\unwrapped\win64.o  （进入vivado安装目录下所示文件夹）</li><li>Backup ‘vivado.exe’ by renaming it to ‘vivado.exe.backup’ (重命名vivado.exe文件)</li><li>Copy ‘vivado-vg.exe’ and paste it into the same folder.(将vivado-vg.exe复制到当前文件夹)</li><li>Rename ‘vivado-vg - Copy.exe’ to ‘vivado.exe’（将vivado-vg.exe的复制版本改名为vivado.exe）</li></ul><p><a href="https://www.xilinx.com/support/answers/69908.html" target="_blank" rel="noopener">https://www.xilinx.com/support/answers/69908.html</a></p><h3 id="2-vivado-2016-4-SDK在ubuntu系统下启动问题"><a href="#2-vivado-2016-4-SDK在ubuntu系统下启动问题" class="headerlink" title="2. vivado 2016.4 SDK在ubuntu系统下启动问题"></a>2. vivado 2016.4 SDK在ubuntu系统下启动问题</h3><blockquote><p>在ubuntu系统中，无论使用launch SDK还是单独调用xsdk，都无法打开SDK的启动界面</p></blockquote><p>出现以上问题，是由于eclipse的问题，需要修改SDK安装目录下eclipse的启动文件。解决方法来自xilinx的 forum</p><blockquote><p>在SDK/2016.X/.settings64-Software_Development_Kit__SDK_.sh中添加 export SWT_GTK3=0 。不要忘了source 此.sh文件</p></blockquote><p> &lt; <a href="https://www.xilinx.com/support/answers/68490.html" target="_blank" rel="noopener">https://www.xilinx.com/support/answers/68490.html</a> &gt;</p>]]></content>
+      
+      
+        <tags>
+            
+            <tag> Xilinx Tool </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>Vivado HLS 简介</title>
+      <link href="/2018/03/12/HLS-One/"/>
+      <content type="html"><![CDATA[<h2 id="HLS简介"><a href="#HLS简介" class="headerlink" title="HLS简介"></a>HLS简介</h2><p> HLS 是 High level Synthesis的简称，属于FPGA开发流程中比较高级的一环。相对于传统的FPGA流程：HDL输入、综合、映射、布局和布线等，HLS位于HDL输入的前一个步骤，实现了从C语言到传统流程输入语言HDL语言的转换。</p><blockquote><p>HDL: 硬件描述语言，主要包含Verilog HDL 和 VHDL</p></blockquote><h2 id="HLS-特点"><a href="#HLS-特点" class="headerlink" title="HLS 特点"></a>HLS 特点</h2><ul><li>支持C语言进行算法描述:<em>提高开发效率</em></li><li>支持C语言进行算法验证:<em>提高测试效率</em></li></ul><h2 id="HLS-运行流程："><a href="#HLS-运行流程：" class="headerlink" title="HLS 运行流程："></a>HLS 运行流程：</h2><p> HLS 的运行流程包含三个部分： schedule ，binding <img src="/images/HLS_Flow.jpg" alt="1"></p><ul><li>shedule ：</li><li>binding ：</li></ul><blockquote><font color="blue" size="2">完成 <strong>schedule</strong> 和 <strong>binding</strong> 流程后，</font></blockquote>]]></content>
+      
+      
+        <tags>
+            
+            <tag> Vivado HLS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>欢迎来到FPGA小站</title>
       <link href="/2018/03/11/hello/"/>
       <content type="html"><![CDATA[<h2 id="FPGA-小站介绍"><a href="#FPGA-小站介绍" class="headerlink" title="FPGA 小站介绍"></a>FPGA 小站介绍</h2><blockquote><p>FPGA小站主要记录FPGA论文学习与工程实践的点滴！欢迎点评，感谢您的建议。</p></blockquote><p><img src="https://www.allaboutcircuits.com/uploads/thumbnails/FPGA.jpg" alt=""></p>]]></content>
